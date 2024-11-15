@@ -24,7 +24,7 @@ git clone https://github.com/monicaalyssa/mingo
 3. Install dependencies: `npm install`
 4. Install Expo CLI: `npm install -g expo-cli`
 5. Start the app with `expo start`, this will open the Expo Metro Bundler.
-6. Scan the QR code on your mobile device to open Mingo on the Expo Go app.
+6. Scan the QR code on your mobile device to open Mingo in the Expo Go app.
 
 ## Technologies & Dependencies
 ### Frontend
