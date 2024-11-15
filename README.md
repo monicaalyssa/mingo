@@ -44,13 +44,13 @@ This project was built using [Node v18.20.4] and uses the following technologies
 ### Frontend
 <a href="https://reactnative.dev/">React Native</a>: The core framework, allowing a cross-platform mobile app (iOS and Android) using JavaScript and React.
 
-<a href="https://expo.dev/">Expo</a>:  A toolset for the React Native development process, providing a pre-configured environment.
+<a href="https://expo.dev/">Expo</a>:  Toolset for the React Native development process, providing a pre-configured environment.
 
 ### UI Components
-<a href="https://github.com/FaridSafi/react-native-gifted-chat">Gifted Chat Library</a>: A React Native componenent library for chat UIs.
+<a href="https://github.com/FaridSafi/react-native-gifted-chat">Gifted Chat Library</a>: React Native componenent library for chat UIs.
 
 ### Database
-<a href="https://firebase.google.com/">Firebase</a> (Firestore): A NoSQL database by Google, for real-time data syncing and offline support. It stores chat messages and user data.
+<a href="https://firebase.google.com/">Firebase</a> (Firestore): NoSQL database by Google, for real-time data syncing and offline support. It stores chat messages and user data.
 
-<a href="https://firebase.google.com/docs/auth">Firebase Authentication</a>: A secure for authentication service offering anonymous authentication for quick user sign-in.
+<a href="https://firebase.google.com/docs/auth">Firebase Authentication</a>: Secure authentication service offering anonymous authentication for quick user sign-in.
 
