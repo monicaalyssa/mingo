@@ -1,7 +1,7 @@
 # Mingo
 Mingo is a messaging & chat application built on React Native.
 
-## Features
+## Features ✨
 
 - **Anonymous User Sign-In:** Users can easily sign in without the need for an account or password.
 - **Personalized Experience:** Custom display name and chat background.
@@ -10,7 +10,20 @@ Mingo is a messaging & chat application built on React Native.
 - **Media Sharing:** Share images from the device's gallery or capture new photos with the camera.
 - **Location Sharing:** Send current location to friends, viewable on an interactive map.
 
-## Installation
+## Installation 📝
+
+<details>
+  <summary>Prerequisites</summary>
+  <br>
+  
+  * Node.js (v18.x.x or higher)
+  * npm or yarn
+  * Expo CLI (v5.x.x)
+  * Expo Go mobile app
+
+
+## 
+</details>
 
 To use this application locally, follow these steps inside your terminal:
 
@@ -26,17 +39,18 @@ git clone https://github.com/monicaalyssa/mingo
 5. Start the app with `expo start`, this will open the Expo Metro Bundler.
 6. Scan the QR code on your mobile device to open Mingo in the Expo Go app.
 
-## Technologies & Dependencies
+## Technologies & Dependencies 🛠️
+This project was built using [Node v18.20.4] and uses the following technologies:
 ### Frontend
-<strong>React Native:</strong> The core framework, allowing a cross-platform mobile app (iOS and Android) using JavaScript and React.
+<a href="https://reactnative.dev/">React Native</a>: The core framework, allowing a cross-platform mobile app (iOS and Android) using JavaScript and React.
 
-<strong>Expo:</strong> A toolset for the React Native development process, providing a pre-configured environment.
+<a href="https://expo.dev/">Expo</a>:  A toolset for the React Native development process, providing a pre-configured environment.
 
 ### UI Components
-<strong>Gifted Chat Library:</strong> A React Native componenent library for chat UIs.
+<a href="https://github.com/FaridSafi/react-native-gifted-chat">Gifted Chat Library</a>: A React Native componenent library for chat UIs.
 
 ### Database
-<strong>Firebase (Firestore):</strong> A NoSQL database by Google, for real-time data syncing and offline support. It stores chat messages and user data.
+<a href="https://firebase.google.com/">Firebase</a> (Firestore): A NoSQL database by Google, for real-time data syncing and offline support. It stores chat messages and user data.
 
-<strong>Firebase Authentication:</strong> A secure for authentication service offering anonymous authentication for quick user sign-in.
+<a href="https://firebase.google.com/docs/auth">Firebase Authentication</a>: A secure for authentication service offering anonymous authentication for quick user sign-in.
 
