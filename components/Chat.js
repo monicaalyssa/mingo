@@ -19,6 +19,7 @@ const Chat = ({ route, navigation }) => {
         padding: 5,
       },
       left: {
+        backgroundColor: "#E6E6E6",
         padding:5,
       }
     }}
@@ -70,11 +71,10 @@ const Chat = ({ route, navigation }) => {
         _id: 1,
         text: "Hello :-)",
         createdAt: new Date(),
-        name: "Tester",
         user: {
           _id: 2,
           name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
+          avatar: "https://placehold.co/40x40",
         },
       },
       {

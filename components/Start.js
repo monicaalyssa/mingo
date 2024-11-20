@@ -30,25 +30,25 @@ const Start = ({ navigation }) => {
                 <View style={styles.buttonFlex}>
                   <TouchableOpacity
                     onPress={() => {
-                      setSelectedBackground(1), setChatBackground("#cdb4db");
+                      setSelectedBackground(1), setChatBackground("#f5edff");
                     }}
                     style={[styles.circle, styles.circle1, selectedBackground === 1 && styles.selectedBackground]}
                   ></TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      setSelectedBackground(2), setChatBackground("#ffc8dd");
+                      setSelectedBackground(2), setChatBackground("#feeef8");
                     }}
                     style={[styles.circle, styles.circle2, selectedBackground === 2 && styles.selectedBackground]}
                   ></TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      setSelectedBackground(3), setChatBackground("#ccd5ae");
+                      setSelectedBackground(3), setChatBackground("#e9f9ee");
                     }}
                     style={[styles.circle, styles.circle3, selectedBackground === 3 && styles.selectedBackground]}
                   ></TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      setSelectedBackground(4), setChatBackground("#a2d2ff");
+                      setSelectedBackground(4), setChatBackground("#edf6ff");
                     }}
                     style={[styles.circle, styles.circle4, selectedBackground === 4 && styles.selectedBackground]}
                   ></TouchableOpacity>
@@ -150,16 +150,16 @@ const styles = StyleSheet.create({
     padding: 4
   },
   circle1: {
-    backgroundColor: "#cdb4db"
+    backgroundColor: "#f5edff"
   },
   circle2: {
-    backgroundColor: "#ffc8dd"
+    backgroundColor: "#feeef8"
   },
   circle3: {
-    backgroundColor: "#ccd5ae"
+    backgroundColor: "#e9f9ee"
   },
   circle4: {
-    backgroundColor: "#a2d2ff"
+    backgroundColor: "#edf6ff"
   },
   buttonFlex: {
     flexDirection: "row",
