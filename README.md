@@ -1,5 +1,5 @@
 # Mingo
-Mingo is a messaging & chat application built on React Native.
+Mingo is a messaging & chat room application built on React Native.
 
 ## Features ✨
 
