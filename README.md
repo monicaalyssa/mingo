@@ -54,3 +54,7 @@ This project was built using [Node v18.20.4] and uses the following technologies
 
 <a href="https://firebase.google.com/docs/auth">Firebase Authentication</a>: Secure authentication service offering anonymous authentication for quick user sign-in.
 
+## Demo
+
+https://github.com/user-attachments/assets/b8cb605e-9e9b-4cd2-b4c0-6b306770182c
+
