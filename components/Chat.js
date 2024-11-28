@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Bubble, Composer, GiftedChat, Send } from "react-native-gifted-chat";
 import { Platform, KeyboardAvoidingView } from "react-native";
+import { onSnapshot, orderBy, query, collection, addDoc } from "firebase/firestore";
 
 const Chat = ({ route, navigation, db }) => {
   const { name } = route.params;
   const { chatBackground } = route.params;
   const [messages, setMessages] = useState([]);
-  const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
-  }
 
   const renderBubble = (props) => {
     return <Bubble
@@ -60,30 +58,26 @@ const Chat = ({ route, navigation, db }) => {
     />
   )
 
+  const onSend = async (newMessages) => {
+    const newMessagesRef = await addDoc(collection(db, "messages"), newMessages[0]);
+  }
 
   useEffect(() => {
     navigation.setOptions({ title: "Messages" });
   }, []);
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello :-)",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placehold.co/40x40",
-        },
-      },
-      {
-      _id: 2,
-      text: 'Welcome, this is your first chat!',
-      createdAt: new Date(),
-      system: true,
-      }
-    ]);
+    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
+    const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+      let newMessages = [];
+      documentsSnapshot.forEach(doc => {
+        newMessages.push({ id: doc.id, ...doc.data() })
+      })
+      setMessages(newMessages);
+    })
+    return () => {
+      if (unsubMessages) unsubMessages;
+    }
   }, []);
 
   return (
@@ -91,7 +85,7 @@ const Chat = ({ route, navigation, db }) => {
     
       <GiftedChat
       messages={messages}
-      onSend={messages => onSend(messages)}
+      onSend={onSend(newMessages)}
       renderBubble={renderBubble}
       renderComposer={renderComposer}
       renderSend={renderSend}
