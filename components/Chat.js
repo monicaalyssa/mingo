@@ -8,6 +8,7 @@ const Chat = ({ route, navigation, db }) => {
   const { name } = route.params;
   const { chatBackground } = route.params;
   const [messages, setMessages] = useState([]);
+  const { userID } = route.params
 
   const renderBubble = (props) => {
     return <Bubble
@@ -85,12 +86,14 @@ const Chat = ({ route, navigation, db }) => {
     
       <GiftedChat
       messages={messages}
-      onSend={onSend(newMessages)}
+      onSend={messages => onSend(messages)}
       renderBubble={renderBubble}
       renderComposer={renderComposer}
       renderSend={renderSend}
+      renderUsernameOnMessage
       user={{
-        _id: 1
+        _id: userID,
+        name: name
       }} />
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
       </View>
