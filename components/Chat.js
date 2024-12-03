@@ -5,7 +5,7 @@ import { Platform, KeyboardAvoidingView } from "react-native";
 import { onSnapshot, orderBy, query, collection, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {
   const { name } = route.params;
   const { chatBackground } = route.params;
   const [messages, setMessages] = useState([]);
@@ -68,19 +68,39 @@ const Chat = ({ route, navigation, db }) => {
     navigation.setOptions({ title: "Messages" });
   }, []);
 
+  let unsubMessages;
+
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
-    const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
-      let newMessages = [];
-      documentsSnapshot.forEach(doc => {
-        newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis()) })
+    if (isConnected === true) {
+      if (unsubMessages) unsubMessages();
+      unsubMessages = null;
+      const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
+      unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+        let newMessages = [];
+        documentsSnapshot.forEach(doc => {
+          newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis()) })
+        })
+        cachedMessages(newMessages)
+        setMessages(newMessages);
       })
-      setMessages(newMessages);
-    })
+    } else loadCachedMessages();
+
     return () => {
       if (unsubMessages) unsubMessages;
     }
-  }, []);
+  }, [isConnected]);
+
+  const cachedMessages = async (messagesToCache) => {
+    try { await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const loadCachedMessages = async () => {
+    const cachedMessages = await AsyncStorage.getItem("messages") || [];
+    setLists(JSON.parse(cachedMessages));
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: chatBackground }]}>

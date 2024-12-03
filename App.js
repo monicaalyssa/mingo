@@ -21,7 +21,10 @@ const App = () => {
     messagingSenderId: "191277134995",
     appId: "1:191277134995:web:73fbb8f083ab45a3aa8966"
   };
-  
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
   useEffect(() => {
     if (connectionStatus.isConnected === false) { 
       Alert.alert("Connection lost!")
@@ -31,15 +34,12 @@ const App = () => {
     }
   }, [connectionStatus.isConnected])
 
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Screen1">
         <Stack.Screen name="Get Started" component={Start} />
         <Stack.Screen name="Chat">
-          {props => <Chat db={db} {...props} isConnected={connectionStatus} />}
+          {props => <Chat db={db} {...props} isConnected={connectionStatus.isConnected} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
