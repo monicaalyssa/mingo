@@ -13,6 +13,15 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const connectionStatus = useNetInfo();
 
+  useEffect(() => {
+    if (connectionStatus.isConnected === false) { 
+      Alert.alert("Connection lost!")
+      disableNetwork(db)
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db)
+    }
+  }, [connectionStatus.isConnected])
+
   const firebaseConfig = {
     apiKey: "AIzaSyCJFRk6UgbsVG7jwXqQ8yEFKZ8T8U0ZPgk",
     authDomain: "meet-63330.firebaseapp.com",
@@ -24,15 +33,6 @@ const App = () => {
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
-  useEffect(() => {
-    if (connectionStatus.isConnected === false) { 
-      Alert.alert("Connection lost!")
-      disableNetwork(db)
-    } else if (connectionStatus.isConnected === true) {
-      enableNetwork(db)
-    }
-  }, [connectionStatus.isConnected])
 
   return (
     <NavigationContainer>

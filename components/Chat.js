@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Bubble, Composer, GiftedChat, Send } from "react-native-gifted-chat";
+import { Bubble, Composer, GiftedChat, InputToolbar, Send } from "react-native-gifted-chat";
 import { Platform, KeyboardAvoidingView } from "react-native";
 import { onSnapshot, orderBy, query, collection, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,6 +10,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
   const { chatBackground } = route.params;
   const [messages, setMessages] = useState([]);
   const { userID } = route.params
+  let unsubMessages;
 
   const renderBubble = (props) => {
     return <Bubble
@@ -68,8 +69,6 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     navigation.setOptions({ title: "Messages" });
   }, []);
 
-  let unsubMessages;
-
   useEffect(() => {
     if (isConnected === true) {
       if (unsubMessages) unsubMessages();
@@ -80,7 +79,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         documentsSnapshot.forEach(doc => {
           newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis()) })
         })
-        cachedMessages(newMessages)
+        cacheMessages(newMessages)
         setMessages(newMessages);
       })
     } else loadCachedMessages();
@@ -90,7 +89,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     }
   }, [isConnected]);
 
-  const cachedMessages = async (messagesToCache) => {
+  const cacheMessages = async (messagesToCache) => {
     try { await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
     } catch (error) {
       console.log(error.message)
@@ -102,6 +101,11 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     setLists(JSON.parse(cachedMessages));
   }
 
+  const renderInputToolbar = (props) => {
+    if (isConnected) return <InputToolbar {...props} />;
+    else return null;
+  }
+
   return (
     <View style={[styles.container, { backgroundColor: chatBackground }]}>
     
@@ -111,6 +115,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       renderBubble={renderBubble}
       renderComposer={renderComposer}
       renderSend={renderSend}
+      renderInputToolbar={renderInputToolbar}
       renderUsernameOnMessage
       user={{
         _id: userID,
