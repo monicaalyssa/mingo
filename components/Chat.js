@@ -4,8 +4,10 @@ import { Bubble, Composer, GiftedChat, InputToolbar, Send } from "react-native-g
 import { Platform, KeyboardAvoidingView } from "react-native";
 import { onSnapshot, orderBy, query, collection, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
   const { name } = route.params;
   const { chatBackground } = route.params;
   const [messages, setMessages] = useState([]);
@@ -77,7 +79,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       unsubMessages = onSnapshot(q, (documentsSnapshot) => {
         let newMessages = [];
         documentsSnapshot.forEach(doc => {
-          newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis()) })
+          newMessages.push({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || new Date(), })
         })
         cacheMessages(newMessages)
         setMessages(newMessages);
@@ -106,6 +108,31 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     else return null;
   }
 
+  const renderCustomActions = (props) => {
+    return <CustomActions name={name} onSend={onSend} userID={userID} storage={storage} {...props}/>;
+  };
+
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+          <MapView
+            style={{width: 150,
+              height: 100,
+              borderRadius: 13,
+              margin: 3}}
+            region={{
+              latitude: currentMessage.location.latitude,
+              longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+      );
+    }
+    return null;
+  }
+
   return (
     <View style={[styles.container, { backgroundColor: chatBackground }]}>
     
@@ -117,6 +144,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       renderSend={renderSend}
       renderInputToolbar={renderInputToolbar}
       renderUsernameOnMessage
+      renderActions={renderCustomActions}
+      renderCustomView={renderCustomView}
       user={{
         _id: userID,
         name: name
